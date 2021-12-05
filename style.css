@@ -2,7 +2,7 @@
 
 * {
     font-family: 'Hind Madurai', sans-serif;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 table {
@@ -45,5 +45,20 @@ input {
     border: none;
     font-family: 'Hind Madurai', sans-serif;
     color: gray;
-    font-size: 25px;
+    font-size: 20px;
+    background-color: transparent;
+
 }
+
+button {
+    position: relative;
+    left: 45vw;
+    top: 3.5vh;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    letter-spacing: 1.5px;
+}
+
+
