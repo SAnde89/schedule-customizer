@@ -1,28 +1,65 @@
-function calculate_time(start, end) {
-  var timeCounter = 0;
+function homeroomEditor(newHomeroom) {
 
-  while (start != end) {
-    start++;
-    timeCounter++;
+  // STATIC VARS
 
-    if (start % 100 == 60) {
-      start -= 60; 
-      start += 100; 
-    }
+  const defaultDurations = [5, 42, 42, 42, 13, 13, 13, 42, 42];
+  const defaultHomeroom = defaultDurations[0];
 
-    if (start / 100 == 13) {
-      start -= 1300; 
-      start += 100;
+  // LOOPS 
+
+  if (newHomeroom > defaultHomeroom) {
+    let timeTaken = (newHomeroom - defaultHomeroom);
+    let timeCounter = 0;
+
+    while (timeCounter <= timeTaken) {
+      for (let i = 1; i < defaultDurations.length; i++) {
+
+        timeCounter++;
+
+        if (timeCounter > timeTaken) {
+          break;
+        }
+
+        defaultDurations[i]--;
+
+      }
+
     }
 
   }
 
-  return timeCounter;
+  else if (defaultHomeroom > newHomeroom) {
+    let timeGiven = (defaultHomeroom - newHomeroom);
+    let timeCounter2 = 0;
+
+    while  (timeCounter <= timeGiven) {
+
+      for (let i = 0; i < defaultDurations.length; i++) {
+        timeCounter2++;
+
+        if (timeCounter2 > timeGiven) {
+          break;
+        }
+
+        defaultDurations[i]++;
+
+      }
+
+    }
+  
+  }
+
+  else {}
+
+  defaultDurations[0] = newHomeroom;
+
+  for (let i = 0; i < defaultDurations.length; i++) {
+    console.log(defaultDurations[i])
+  }
 
 }
 
-
-
 module.exports = {
-  main_func: main_func
+  homeroomEditor: homeroomEditor
 };
+
