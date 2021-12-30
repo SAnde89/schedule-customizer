@@ -42,7 +42,7 @@ function timeFrameCalculation(durations) {
             startTime -= 1200;
         }
 
-    }
+    }    
 
     return timeFrames;
 
@@ -50,7 +50,9 @@ function timeFrameCalculation(durations) {
 
 
 
-
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 
 
@@ -114,7 +116,9 @@ function homeroomEditor(newHomeroom) {
 
 
 
-
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 
 
@@ -133,17 +137,68 @@ function insertLunchPeriods(durations) {
     
     // didn't use a for loop because i get a TypeError and im lazy as fuck to change it
     durations.splice(lunchPeriods[0], 0, lunchDurations);
+    
     durations.splice(lunchPeriods[1], 0, lunchDurations);
+    
     durations.splice(lunchPeriods[2], 0, lunchDurations);
+    
     durations.splice(lunchPeriods[3], 0, lunchDurations);
 
     return durations;
     
 }
 
+// inserts a colon thing
+function timeFrameFormat(timeFrames) {
+
+    let formattedTimeFrames = [];
+    
+    const insert = (str, index, value) => {
+        return str.substr(0, index) + value + str.substr(index);
+    }
+
+    for (let i = 0; i < timeFrames.length; i++) {
+
+        let framesSep = timeFrames[i].split(" ");
+        
+        if (framesSep[0].length == 3) {
+
+            framesSep[0] = insert(framesSep[0], 1, ":")
+            
+        }
+
+        else if (framesSep[0].length == 4) {
+            
+            framesSep[0] = insert(framesSep[0], 2, ":");
+
+        }
+
+        if (framesSep[2].length == 3) {
+
+            framesSep[2] = insert(framesSep[2], 1, ":");
+
+        }
+
+        else if (framesSep[2].length == 4) {
+
+            framesSep[2] = insert(framesSep[2], 2, ":");
+
+        }
+
+        formattedTimeFrames.push(framesSep.join(" "))
+
+    }
+
+
+    return formattedTimeFrames;
+
+}
 
 
 
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 
 
@@ -169,15 +224,16 @@ function calculate() {
 
     // converting durations into timeframes
     let updatedTimeFrames = timeFrameCalculation(updatedDurations);
+    updatedTimeFrames = timeFrameFormat(updatedTimeFrames);
 
+
+    // updating frontend with variables 
     const trList = document.querySelectorAll("tr");
 
     for (let i = 0; i < trList.length; i++) {
-        console.log(trList[i + 1].children[1])
-        console.log(trList[i + 1].children[2])
+        trList[i + 1].children[1].innerHTML = updatedTimeFrames[i]
+        console.log(trList[i + 1].children[2].firstChild.value = updatedDurations[i] + " minutes")
     }
-
-
 
 
 }
