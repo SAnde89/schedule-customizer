@@ -1,3 +1,15 @@
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+    /// CODE CREDIT: SAKET PABBA ///
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+// tracking changed periods 
+
+var changed_periods = [false, false, false, false, false, false, false, false, false];
+
 // all cases work for timeFrameCalculation  
 
 function timeFrameCalculation(durations) {
@@ -58,8 +70,7 @@ function timeFrameCalculation(durations) {
 
 function homeroomEditor(newHomeroom) {
 
-
-    const defaultDurations = [5, 42, 42, 42, 13, 13, 13, 42, 42];
+    const defaultDurations = [5, 13, 13, 13 , 42, 42, 42, 42, 42];
     const defaultHomeroom = defaultDurations[0];
 
     if (newHomeroom > defaultHomeroom) {
@@ -68,7 +79,7 @@ function homeroomEditor(newHomeroom) {
         let timeCounter = 0;
 
         while (timeCounter <= timeTaken) {
-        for (let i = 1; i < defaultDurations.length; i++) {
+        for (let i = 1; i < 9; i++) {
 
             timeCounter++;
 
@@ -122,7 +133,573 @@ function homeroomEditor(newHomeroom) {
 
 
 
-// useless ass functions
+function getEditedDurations(durationInputs) {
+
+    let customPeriods = [];
+    let customPeriodDurations = [];
+
+    // durationInputs = removeLunches(durationInputs);
+    const defaultDurations = [5, 42, 42, 42, 24, 13, 24, 13, 24, 13, 24, 42, 42];
+
+    if (defaultDurations.length != durationInputs.length) {
+        return console.error("Cannot compare durations because they are not the same length ");
+    }
+
+    else {
+        for (let i = 0; i < defaultDurations.length; i++) {
+
+            if ((defaultDurations[i] - durationInputs[i]) != 0) {
+                
+                customPeriods.push(i);
+                customPeriodDurations.push(durationInputs[i])
+
+            }
+
+        }
+    }
+
+    return [customPeriods, customPeriodDurations];
+}
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+
+function periodOne(newPeriodOne, durations, changed_periods) {
+
+    let new_periodOne = newPeriodOne;
+
+    if (new_periodOne > durations[4])
+    
+    {
+
+        let timeTaken = new_periodOne - durations[4];
+        let timeCounter = 0;
+
+        while (timeCounter <= timeTaken) {
+
+            for (let i = 1; (i<=3 || (i > 4 && i < 9) ) && changed_periods[i] == false; i++) {
+
+                timeCounter++;
+
+                if (timeCounter > timeTaken)
+                {
+
+                    break;
+                }
+
+                durations[i]--;
+            }
+        }
+
+        changed_periods[4] = true;
+
+    }
+
+    if (new_periodOne < durations[4])
+    {
+
+        let timeGiven = durations[4] - new_periodOne;
+
+        let timeCounter2 = 0;
+
+        while ( timeCounter2 <= timeGiven) {
+
+
+            for (let i = 1; i<=3 || (i>4 && i < 9) && changed_periods[i] == false; i++)
+            
+            {
+                timeCounter2++;
+
+                if (timeCounter2 > timeGiven)
+                {
+                    break;
+
+                }
+
+                durations[i]++;
+
+
+            }
+
+
+        }
+
+        changed_periods[4] = true;
+
+    }
+
+    durations[4] = new_periodOne;
+
+    return durations;
+
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+
+function periodTwo(newPeriodTwo, durations, changed_periods) {
+		
+		if (newPeriodTwo > durations[5])
+		
+        {
+			
+			let timeTaken = newPeriodTwo - durations[5];
+
+			let timeCounter = 0;
+			
+			while (timeCounter <= timeTaken)
+			
+            {
+				for(let i = 1; ((i<5 &&i>5) || (i < 9)) && changed_periods[i] == false; i++)
+				{
+					
+					timeCounter++;
+					
+					if(timeCounter>timeTaken)
+					{
+						
+						break;
+						
+					}
+					
+					durations[i]--;
+					
+					
+				}
+				
+				
+				
+			}
+			
+			
+		}
+		
+		 if (newPeriodTwo < durations[5])
+			
+         {
+				//time needed to be given to the other periods
+				let timeGiven = durations[5] - newPeriodTwo;
+				
+				let timeCounter2 = 0;
+				
+				while (timeCounter2 <= timeGiven)
+				
+                {
+					
+					for(let i = 1;(i<5 && i>5) ||(i < 9)  && changed_periods[i] == false; i++)
+					{
+						timeCounter2++;
+						
+						if(timeCounter2>timeGiven)
+						{
+							break;
+							
+						}
+						
+                        durations[i]++;
+						
+					}
+					
+				}
+				
+			}
+			 
+			 //per[5] = newP2;
+			 changed_periods[5] = true;
+			 durations[5] = newPeriodTwo;
+		
+		
+		
+		return durations;
+		
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+
+function periodThree(newPeriodThree, durations, changed_periods ) {
+    
+    if (newPeriodThree > durations[6]) {
+        
+        let timeTaken = newPeriodThree - Integer(durations[6]);
+        let timeCounter = 0;
+        
+        while(timeCounter<=timeTaken) { 
+            for(let i = 1; ((i<6 &&i>6) || (i<9)) && changed_periods[i]==false;i++) {
+                
+                timeCounter++;
+                
+                if(timeCounter>timeTaken)
+               
+                {
+                    
+                    break;
+                    
+                }
+                
+                durations[i]--;
+                
+                
+            }
+               
+        }        
+        
+    }
+    
+     if (newPeriodThree < durations[6]) {
+
+            let timeGiven = durations[6] - newPeriodThree;
+            
+            let timeCounter2 = 0;
+            
+            while (timeCounter2<=timeGiven) {
+                
+                for(let i = 1;(i<6 && i>6) ||(i<9)  && changed_periods[i]==false;i++)
+                {
+                    timeCounter2++;
+                    
+                    if( timeCounter2>timeGiven) {
+                        break;
+                        
+                    }
+                    
+                    durations[i]++;
+                    
+                }
+                
+            }
+            
+        }
+         
+         changed_periods[6] = true;
+         durations[6] = newPeriodThree;
+    
+    return durations;
+    
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+
+function periodEleven(newPeriodEleven, durations, changed_periods) {
+		
+		if (newPeriodEleven > durations[7])
+		{
+			
+			let timeTaken = newPeriodEleven - durations[7];
+            let timeCounter = 0;
+			
+			while (timeCounter<=timeTaken)
+			{
+
+				for(let i = 1;( (i<7 &&i>7) || (i<9)) && changed_periods[i]==false;i++) {
+					
+					timeCounter++;
+					
+					if(timeCounter>timeTaken)
+					{
+						
+						break;
+						
+					}
+					
+					durations[i]--;
+					
+					
+				}
+
+			}
+			
+		}
+		
+		 if (newPeriodEleven < durations[7])
+			{
+
+				let timeGiven = durations[7] - newPeriodEleven;
+				
+				let timeCounter2 = 0;
+				
+				while (timeCounter2<=timeGiven) {
+					
+					//System.out.println("lengt:h: " + per.length);
+					for(let i = 1;(i<7 && i>7) ||(i<9)  && changed_periods[i]==false;i++)
+					{
+						timeCounter2++;
+						
+						if(timeCounter2>timeGiven)
+						{
+							break;
+							
+						}
+						durations[i]++;
+						
+						
+					}
+					
+					
+				}
+				
+				
+			}
+			 
+			 //per[5] = newP2;
+			 changed_periods[7] = true;
+			 durations[7] = newPeriodEleven;
+		
+		
+		return durations;
+}
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+
+function periodTwelve(newPeriodTwelve, durations, changed_periods) {
+		
+		if(newPeriodTwelve > durations[8]) {
+			
+			let timeTaken = newPeriodTwelve - durations[8];
+			let timeCounter = 0;
+			
+			while(timeCounter<=timeTaken) {
+
+				for(let i = 1;( (i<8 &&i>8) || (i<9)) && changed_periods[i]==false;i++)
+				{
+					
+					timeCounter++;
+					
+					if(timeCounter>timeTaken)
+					{
+						
+						break;
+						
+					}
+					
+					durations[i]--;
+					
+					
+				}
+				
+				
+				
+			}
+			
+			
+		}
+		
+		 if(newPeriodTwelve < durations[8]) {
+
+				let timeGiven = durations[8] - newPeriodTwelve;
+				
+				let timeCounter2 = 0;
+				
+				while (timeCounter2<=timeGiven) {
+					
+					for (let i = 1;(i<8 && i>8) ||(i<9)  && changed_periods[i]==false;i++)
+					{
+						timeCounter2++;
+						
+						if(timeCounter2>timeGiven)
+						{
+							break;
+							
+						}
+						durations[i]++;
+						
+						
+					}
+					
+					
+				}
+				
+				
+			}
+			 
+			 changed_periods[8] = true;
+			 durations[8] = newPeriodTwelve;
+		
+		
+		return durations;
+}
+
+function periodOdd(newOddPeriod, durations, changed_periods) {
+    
+        let currentOddTime = durations[1];
+		
+		if (newOddPeriod > currentOddTime) {
+            let timeTaken = (newOddPeriod*3)  - (currentOddTime*3) ;
+			
+			
+			let timeCounter2 = 0;
+			
+			while (timeCounter2<=timeTaken)
+			
+            {
+				
+				
+				for(let i = 9; i < durations.length; i++)	
+				{
+					timeCounter2++;
+					
+					if(timeCounter2>timeTaken)
+					
+                    {
+						break;
+						
+					}
+				
+                    durations[i]--;
+					
+					
+				}
+				
+				
+			}
+			
+		}
+		
+		if(newOddPeriod < currentOddTime) {
+
+			let timeGiven = (currentOddTime *3) - (newOddPeriod * 3);
+
+			let timeCounter2 = 0;
+			
+			while (timeCounter2<=timeGiven) {
+
+				
+				for(let i = 9; i < durations.length ;i++) {
+					
+					timeCounter2++;
+					
+					if(timeCounter2>timeGiven)
+					{
+						break;
+						
+					}
+					
+                    durations[i]++;
+					
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		
+        durations[1] = newOddPeriod;
+		durations[2] = newOddPeriod;
+		durations[3] = newOddPeriod;	
+			
+		return durations;
+	
+}
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+function lunchEditor(newLunchPeriod, durations, changed_periods) {
+    
+    let currentLunchTime = durations[9];
+    
+    if(newLunchPeriod > currentLunchTime) {
+        let timeTaken = (newLunchPeriod * 4) - (currentLunchTime *4);
+        let timeCounter2 = 0;
+        
+        while(timeCounter2<=timeTaken) {
+        
+            for(let i = 1;i<4 ;i++)	 {
+                timeCounter2++;
+                
+                if(timeCounter2>timeTaken)
+                {
+                    break;
+                    
+                }
+                durations[i]--;
+                
+            }
+            
+            
+        }
+        
+    }
+
+    if (newLunchPeriod < currentLunchTime)
+    
+    {
+
+        let timeGiven = (currentLunchTime *4) - (newLunchPeriod * 4) ;
+
+        let timeCounter2 = 0;
+        
+        while(timeCounter2<=timeGiven)
+        
+        {
+            
+            for(let i = 1;i<4 ;i++)					
+            {
+                
+                timeCounter2++;
+                
+                if(timeCounter2>timeGiven)
+                {
+                    break;
+                    
+                }
+                
+                durations[i]++;
+                
+            }
+            
+        }
+        
+    }
+    
+    durations[9] = newLunchPeriod;
+    durations[10] = newLunchPeriod;
+    durations[11] = newLunchPeriod;
+    durations[12] = newLunchPeriod;
+    
+    return durations;
+
+}
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+
+/// useless ass functions
 
 function removeLunches(item) {
     if (item != 24) {
@@ -130,12 +707,15 @@ function removeLunches(item) {
     }
 }
 
+/// inserts lunch periods into respective index
+
 function insertLunchPeriods(durations) {
     
     const lunchDurations = 24; 
     const lunchPeriods = [4, 6, 8, 10];
     
     // didn't use a for loop because i get a TypeError and im lazy as fuck to change it
+    
     durations.splice(lunchPeriods[0], 0, lunchDurations);
     
     durations.splice(lunchPeriods[1], 0, lunchDurations);
@@ -149,6 +729,7 @@ function insertLunchPeriods(durations) {
 }
 
 // inserts a colon thing
+
 function timeFrameFormat(timeFrames) {
 
     let formattedTimeFrames = [];
@@ -194,6 +775,49 @@ function timeFrameFormat(timeFrames) {
 
 }
 
+/// rearranges the durations for proper output
+
+function rearrangeDurations(durations) {
+    
+    let output_durations = [];
+
+    output_durations[0] = durations[0];
+    output_durations[1] = durations[4];
+    output_durations[2] = durations[5];
+    output_durations[3] = durations[6];
+    output_durations[5] = durations[1];
+    output_durations[7] = durations[2];
+    output_durations[9] = durations[3];
+    output_durations[11] = durations[7];
+    output_durations[12] = durations[8];
+    
+    // rearranging lunches
+
+    output_durations[4] = durations[9];
+    output_durations[6] = durations[10]; 
+    output_durations[8] = durations[11];
+    output_durations[10] = durations[12]
+     
+    const filtered = output_durations.filter(function (el) {
+        return el != null;
+    });
+    
+    return filtered;
+
+}  
+
+/// inserts lunches at the end of the array for calculation
+
+function insertLunchforCalculation(durations) {
+
+    for (let i = 0; i < 4; i++) {
+        durations.push(24);
+    }
+
+    return durations;
+
+}
+
 
 
 ////////////////////////////////////////////////////////////////////
@@ -201,10 +825,9 @@ function timeFrameFormat(timeFrames) {
 ////////////////////////////////////////////////////////////////////
 
 
-
-// *** function linked for onclick() *** //
 
 function calculate() {
+
     var durationInputs = [];
     var inputs = document.getElementsByTagName('input');
      
@@ -213,27 +836,171 @@ function calculate() {
         durationInputs.push(strippedDuration);
     }
 
-    // filtered out lunches for homeroomEditor method
-    durationInputs = durationInputs.filter(removeLunches); 
+    console.log("Initial duration inputs: " + durationInputs)
 
-    // changed all period durations based on updated homeroom duration
-    let updatedDurations = homeroomEditor(durationInputs[0]);
+    // getting list of edited periods
+    let listOfEditedPeriods = getEditedDurations(durationInputs);
+    console.log("These are all the periods that were changed and their duration change: " + listOfEditedPeriods);
+    
+    // universal array for the schedule output 
+    let mainScheduleDurations = [5, 13, 13, 13 , 42, 42, 42, 42, 42, 24, 24, 24, 24];
 
-    // inserting lunch periods for frame calculation method
-    updatedDurations = insertLunchPeriods(updatedDurations);
+    //logic for changing the schedule based on period changes
+    for (let i = 0; i < listOfEditedPeriods[0].length; i++) { 
+ 
+        if (listOfEditedPeriods[0][i] == 0) {
+            mainScheduleDurations = homeroomEditor(listOfEditedPeriods[1][i])
+            continue;
+        }
 
-    // converting durations into timeframes
-    let updatedTimeFrames = timeFrameCalculation(updatedDurations);
+        if (listOfEditedPeriods[0][i] == 1) {
+
+            mainScheduleDurations = periodOne(
+
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations, 
+                changed_periods
+
+            )
+            
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 2) {
+            mainScheduleDurations = periodTwo(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations, 
+                changed_periods
+                
+            )
+            
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] ==  3) {
+            mainScheduleDurations = periodThree(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations,
+                changed_periods
+            )
+            
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 4) {
+            mainScheduleDurations = lunchEditor(
+                listOfEditedPeriods[1][i], 
+                mainScheduleDurations, 
+                changed_periods
+            )
+
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 5) {
+            mainScheduleDurations = periodOdd(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations,
+                changed_periods
+            )
+           
+            continue;
+
+        }
+
+        if (listOfEditedPeriods[0][i] == 6) {
+            mainScheduleDurations = lunchEditor(
+                listOfEditedPeriods[1][i], 
+                mainScheduleDurations, 
+                changed_periods
+            )
+
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 7) {
+            mainScheduleDurations = periodOdd(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations,
+                changed_periods
+            )
+           
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 8) {
+            mainScheduleDurations = lunchEditor(
+                listOfEditedPeriods[1][i], 
+                mainScheduleDurations, 
+                changed_periods
+            )
+
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 9) {
+            mainScheduleDurations = periodOdd(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations,
+                changed_periods
+            )
+         
+            continue;
+        }
+    
+        if (listOfEditedPeriods[0][i] == 10) {
+            mainScheduleDurations = lunchEditor(
+                listOfEditedPeriods[1][i], 
+                mainScheduleDurations, 
+                changed_periods
+            )
+
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 11) {
+            mainScheduleDurations = periodEleven(
+                listOfEditedPeriods[1][i], 
+                mainScheduleDurations,
+                changed_periods
+            )
+            continue;
+        }
+
+        if (listOfEditedPeriods[0][i] == 12) {
+            mainScheduleDurations = periodTwelve(
+                listOfEditedPeriods[1][i],
+                mainScheduleDurations,
+                changed_periods
+            )
+            continue;
+        }
+
+     
+
+        else {
+            
+            break
+        
+        }
+   
+    } 
+   
+    // rearrange order of durations for printing to website 
+    let rearrangedDurations = rearrangeDurations(mainScheduleDurations);
+    console.log("These are the rearranged durations: " + rearrangedDurations)
+
+    // converting durations into time frames
+    let updatedTimeFrames = timeFrameCalculation(rearrangedDurations);
     updatedTimeFrames = timeFrameFormat(updatedTimeFrames);
+    console.log("The time frames for each period: " + updatedTimeFrames);
 
-
-    // updating frontend with variables 
+    // updating frontend with all local variables 
     const trList = document.querySelectorAll("tr");
 
-    for (let i = 0; i < trList.length; i++) {
-        trList[i + 1].children[1].innerHTML = updatedTimeFrames[i]
-        console.log(trList[i + 1].children[2].firstChild.value = updatedDurations[i] + " minutes")
-    }
-
+      for (let i = 0; i < trList.length; i++) {
+        trList[i + 1].children[1].innerHTML = updatedTimeFrames[i];
+        trList[i + 1].children[2].firstChild.value = rearrangedDurations[i] + " minutes";
+    } 
 
 }
