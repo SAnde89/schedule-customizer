@@ -102,7 +102,7 @@ function homeroomEditor(newHomeroom) {
 
         while  (timeCounter <= timeGiven) {
 
-        for (let i = 0; i < defaultDurations.length; i++) {
+        for (let i = 0; i < 9; i++) {
             timeCounter2++;
 
             if (timeCounter2 > timeGiven) {
@@ -710,19 +710,11 @@ function removeLunches(item) {
 /// inserts lunch periods into respective index
 
 function insertLunchPeriods(durations) {
+
+    for (let i = 0; i < 4; i++) {
+        durations.push(24); 
     
-    const lunchDurations = 24; 
-    const lunchPeriods = [4, 6, 8, 10];
-    
-    // didn't use a for loop because i get a TypeError and im lazy as fuck to change it
-    
-    durations.splice(lunchPeriods[0], 0, lunchDurations);
-    
-    durations.splice(lunchPeriods[1], 0, lunchDurations);
-    
-    durations.splice(lunchPeriods[2], 0, lunchDurations);
-    
-    durations.splice(lunchPeriods[3], 0, lunchDurations);
+    }
 
     return durations;
     
@@ -850,6 +842,7 @@ function calculate() {
  
         if (listOfEditedPeriods[0][i] == 0) {
             mainScheduleDurations = homeroomEditor(listOfEditedPeriods[1][i])
+            mainScheduleDurations = insertLunchPeriods(mainScheduleDurations);
             continue;
         }
 
@@ -985,7 +978,11 @@ function calculate() {
         }
    
     } 
-   
+  
+    // printing out raw durations
+
+    console.log(mainScheduleDurations);
+
     // rearrange order of durations for printing to website 
     let rearrangedDurations = rearrangeDurations(mainScheduleDurations);
     console.log("These are the rearranged durations: " + rearrangedDurations)
