@@ -6,8 +6,16 @@
 ////////////////////////////////////////
 ////////////////////////////////////////
 
-// tracking changed periods 
+// default durations
+const defaultDurations = [5, 42, 42, 42, 24, 13, 24, 13, 24, 13, 24, 42, 42];
 
+// setting global compare durations variable
+var  compareDurations = defaultDurations;
+
+// universal array to keep track of main schedule durations
+var mainScheduleDurations = [5, 13, 13, 13, 42, 42, 42, 42, 42, 24, 24, 24, 24];
+
+// tracking changed periods 
 var changed_periods = [false, false, false, false, false, false, false, false, false];
 
 // all cases work for timeFrameCalculation  
@@ -132,23 +140,21 @@ function homeroomEditor(newHomeroom) {
 ////////////////////////////////////////////////////////////////////
 
 
-
-function getEditedDurations(durationInputs) {
+function getEditedDurations(durationInputs, compareDurationInputs) {
 
     let customPeriods = [];
     let customPeriodDurations = [];
 
     // durationInputs = removeLunches(durationInputs);
-    const defaultDurations = [5, 42, 42, 42, 24, 13, 24, 13, 24, 13, 24, 42, 42];
 
-    if (defaultDurations.length != durationInputs.length) {
+    if (compareDurationInputs.length != durationInputs.length) {
         return console.error("Cannot compare durations because they are not the same length ");
     }
 
     else {
-        for (let i = 0; i < defaultDurations.length; i++) {
+        for (let i = 0; i < compareDurationInputs.length; i++) {
 
-            if ((defaultDurations[i] - durationInputs[i]) != 0) {
+            if ((compareDurationInputs[i] - durationInputs[i]) != 0) {
                 
                 customPeriods.push(i);
                 customPeriodDurations.push(durationInputs[i])
@@ -160,7 +166,6 @@ function getEditedDurations(durationInputs) {
 
     return [customPeriods, customPeriodDurations];
 }
-
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -831,11 +836,11 @@ function calculate() {
     console.log("Initial duration inputs: " + durationInputs)
 
     // getting list of edited periods
-    let listOfEditedPeriods = getEditedDurations(durationInputs);
+    let listOfEditedPeriods = getEditedDurations(durationInputs, compareDurations);
     console.log("These are all the periods that were changed and their duration change: " + listOfEditedPeriods);
     
     // universal array for the schedule output 
-    let mainScheduleDurations = [5, 13, 13, 13 , 42, 42, 42, 42, 42, 24, 24, 24, 24];
+    // let mainScheduleDurations = [5, 13, 13, 13 , 42, 42, 42, 42, 42, 24, 24, 24, 24];
 
     //logic for changing the schedule based on period changes
     for (let i = 0; i < listOfEditedPeriods[0].length; i++) { 
@@ -979,13 +984,16 @@ function calculate() {
    
     } 
   
-    // printing out raw durations
+    // printing out raw durations without any function changes
+    console.log("This is the raw schedule durations without any function changes " + mainScheduleDurations);
 
-    console.log(mainScheduleDurations);
-
+    
     // rearrange order of durations for printing to website 
     let rearrangedDurations = rearrangeDurations(mainScheduleDurations);
     console.log("These are the rearranged durations: " + rearrangedDurations)
+    
+    // setting the new schedule durations to the compare durations variable
+    compareDurations = rearrangedDurations;
 
     // converting durations into time frames
     let updatedTimeFrames = timeFrameCalculation(rearrangedDurations);

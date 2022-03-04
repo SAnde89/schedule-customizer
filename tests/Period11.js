@@ -71,6 +71,6 @@ function period11(newPeriodEleven, durations, changed_periods) {
 
 const defaultDurations = [5, 13, 13, 13 , 42, 42, 42, 42, 42, 24, 24, 24, 24];
 var changed_periods = [false, false, false, false, false, false, false, false, false];
-let  output = period11(30, defaultDurations, changed_periods);
+let  output = period11(40, defaultDurations, changed_periods);
 
 console.log(output);
